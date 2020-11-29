@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+{% if journal_list %}
+    <ul>
+    {% for journal in journal_list %}
+        <li><a href="/{{ journal.id }}/read">{{ journal.upsetting_event }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Journals are available.</p>
+{% endif %}
+{% endblock %}
