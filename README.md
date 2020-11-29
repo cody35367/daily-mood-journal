@@ -14,5 +14,5 @@ python manage.py migrate
 python manage.py createsuperuser
 python manage.py loaddata base_data.json
 python manage.py runserver
-# of use F5 in visual studio code.
+# or use F5 in visual studio code instead of above runserver
 ```
