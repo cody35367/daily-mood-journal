@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory
+from django.forms import CheckboxSelectMultiple
 
 from .models import Journal,Emotion,Thought,Distortion
 
@@ -12,20 +13,25 @@ EmotionFormSet = inlineformset_factory(
                     Journal,
                     Emotion,
                     extra=1,
-                    fields=['emotion',
-                            'other_text',
-                            'now_percent',
-                            'goal_percent',
-                            'after_percent'
+                    fields=[
+                        'emotion',
+                        'other_text',
+                        'now_percent',
+                        'goal_percent',
+                        'after_percent'
                     ])
 ThoughtFormSet = inlineformset_factory(
                     Journal,
                     Thought,
                     extra=1,
-                    fields=['negative_thoughts',
-                            'now_percent',
-                            'after_percent',
-                            'distortions',
-                            'positive_thoughts',
-                            'belief_percent'
+                    widgets={
+                        'distortions' : CheckboxSelectMultiple()
+                    },
+                    fields=[
+                        'negative_thoughts',
+                        'now_percent',
+                        'after_percent',
+                        'distortions',
+                        'positive_thoughts',
+                        'belief_percent'
                     ])
