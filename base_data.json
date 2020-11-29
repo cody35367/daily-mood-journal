@@ -1,0 +1,98 @@
+[
+    {
+        "model": "app.distortion",
+        "pk": 1,
+        "fields": {
+            "name": "All-or-Nothing Thinking",
+            "description": "All-or-Nothing Thinking. You view things in absolute, black-and-white categories"
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 2,
+        "fields": {
+            "name": "Overgeneralization",
+            "description": "Overgeneralization. You view a negative event as a never-ending pattern of defeat: 'This always happens!'"
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 3,
+        "fields": {
+            "name": "Mental Filter",
+            "description": "Mental Filter. You dwell on the negatives and ignore the positives."
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 4,
+        "fields": {
+            "name": "Discounting the Positive",
+            "description": "Discounting the Positive. You insist that your positive qualities don't count."
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 5,
+        "fields": {
+            "name": "Mind-Reading",
+            "description": "Mind-Reading. You jump to conclusions not warranted by the facts. You assume that people are reacting negatively to you."
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 6,
+        "fields": {
+            "name": "Fortune-Telling",
+            "description": "Fortune-Telling. You jump to conclusions not warranted by the facts. You predict that things will turn out badly."
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 7,
+        "fields": {
+            "name": "Magnification and Minimization",
+            "description": "Magnification and Minimization. You blow things out of proportion or shrink them."
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 8,
+        "fields": {
+            "name": "Emotional Reasoning",
+            "description": "Emotional Reasoning. You reason from your feelings: 'I feel like an idiot, so I must really be one.'"
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 9,
+        "fields": {
+            "name": "Should Statements",
+            "description": "Should Statements. You use shoulds, shouldn'ts, musts, oughts, and have tos"
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 10,
+        "fields": {
+            "name": "Labeling",
+            "description": "Labeling. Instead of saying, 'I made a mistake,' you say, 'I'm a jerk' or 'I'm a loser.'"
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 11,
+        "fields": {
+            "name": "Self-Blame",
+            "description": "Self-Blame. You find fault instead of solving the problem. You blame yourself for something you weren't entirely responsible for."
+        }
+    },
+    {
+        "model": "app.distortion",
+        "pk": 12,
+        "fields": {
+            "name": "Other-Blame",
+            "description": "Other-Blame. You find fault instead of solving the problem. You blame others and overlook ways you contributed to the problem."
+        }
+    }
+]
