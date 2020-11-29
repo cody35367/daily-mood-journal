@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from .models import Journal
+from .forms import JournalForm,EmotionFormSet,ThoughtFormSet
 
 @login_required
 def index(request):
@@ -11,8 +13,27 @@ def index(request):
 
 @login_required
 def create(request):
-    context = {'page_title': "Create"}
-    return render(request, 'crud.html', context)
+    j = Journal()
+    if request.method == "POST":
+        jf = JournalForm(request.POST, request.FILES,instance=j)
+        efs = EmotionFormSet(request.POST, request.FILES, instance=j)
+        tfs = ThoughtFormSet(request.POST, request.FILES, instance=j)
+        if jf.is_valid() and efs.is_valid() and tfs.is_valid():
+            jf.save()
+            efs.save()
+            tfs.save()
+            return HttpResponseRedirect("/")
+    else:
+        jf = JournalForm(instance=j)
+        efs = EmotionFormSet(instance=j)
+        tfs = ThoughtFormSet(instance=j)
+        context = {
+            'page_title': "Create",
+            'jf': jf,
+            'efs': efs,
+            'tfs': tfs
+            }
+        return render(request, 'crud.html', context)
 
 @login_required
 def edit(request,journal_id):

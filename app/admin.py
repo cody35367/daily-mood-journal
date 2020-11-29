@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Journal,Emotion,Thought,Distortion
 from django.forms import CheckboxSelectMultiple
 from django.db import models
+
+from .models import Journal,Emotion,Thought,Distortion
 
 class EmotionInline(admin.TabularInline):
     model = Emotion
