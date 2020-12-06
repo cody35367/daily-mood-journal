@@ -2,16 +2,51 @@ body {
     background-color: #303030;
 }
 
-h3,label {
+h3 {
+    color: white;
+    padding-top: 20px;
+}
+
+label {
     color: white;
 }
 
-input {
+input, textarea, select {
     background-color: #282828;
     color: white;
     border-radius: 8px;
 }
 
-input:disabled {
+input:disabled, textarea:disabled, select:disabled {
     background-color: #606060;
+}
+
+ul[id^='id_thought_set-'] {
+    list-style-type: none;
+    padding: 0;
+    height:140px;
+    width:260px;
+    overflow:auto;
+}
+
+input[id$='_percent'] {
+    width: 80px;
+}
+
+input[id='id_upsetting_event']{
+    width: 100%;
+}
+
+textarea[id$="_thoughts"]{
+    height:140px;
+    width:230px;
+    overflow:auto;
+}
+
+.table{
+    margin-top: 1rem;
+}
+
+.alert{
+    margin-top: 1rem;
 }

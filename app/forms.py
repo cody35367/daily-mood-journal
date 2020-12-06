@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory
-from django.forms import CheckboxSelectMultiple
+from django.forms import CheckboxSelectMultiple,Textarea
 
 from .models import Journal,Emotion,Thought,Distortion
 
@@ -25,7 +25,9 @@ ThoughtFormSet = inlineformset_factory(
                     Thought,
                     extra=0,
                     widgets={
-                        'distortions' : CheckboxSelectMultiple()
+                        'distortions' : CheckboxSelectMultiple(),
+                        'negative_thoughts' : Textarea(),
+                        'positive_thoughts': Textarea()
                     },
                     fields=[
                         'negative_thoughts',
