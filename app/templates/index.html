@@ -1,12 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
 {% if journal_list %}
-    <ul>
-    {% for journal in journal_list %}
-        <li><a href="/{{ journal.id }}/read">{{ journal.upsetting_event }}</a></li>
-    {% endfor %}
-    </ul>
+<table id="index_table" class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Upsetting Event</th>
+            <th scope="col">Date Created</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for journal in journal_list %}
+        <tr>
+            <td><a href="/{{ journal.id }}/read">{{ journal.upsetting_event }}</a></td>
+            <td>{{ journal.create_date }}</td>
+            <td><a href="/{{ journal.id }}/edit">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% else %}
-    <p>No Journals are available.</p>
+<p>No Journals are available.</p>
 {% endif %}
+<a class="btn btn-primary" href="/create" role="button">Create New Journal</a>
 {% endblock %}

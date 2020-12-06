@@ -35,8 +35,18 @@ def cru(request,journal_id=None):
         jf = JournalForm(instance=j)
         efs = EmotionFormSet(instance=j)
         tfs = ThoughtFormSet(instance=j)
+        url_path = os_path.basename(request.path.strip("/")).capitalize()
+        if url_path == "Read":
+            for field in jf:
+                field.field.disabled=True
+            for form in efs:
+                for field in form:
+                    field.field.disabled=True
+            for form in tfs:
+                for field in form:
+                    field.field.disabled=True
         context = {
-            'page_title': os_path.basename(request.path.strip("/")).capitalize(),
+            'page_title': url_path,
             'journal_id': journal_id,
             'jf': jf,
             'efs': efs,

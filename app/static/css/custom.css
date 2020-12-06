@@ -1,0 +1,12 @@
+body {
+    background-color: rgb(40, 40, 40);
+}
+
+h3,label {
+    color: white;
+}
+
+input {
+    background-color: #646464;
+    color: white;
+}

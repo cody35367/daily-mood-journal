@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-{% if journal_id %}
-<p>{{ journal_id }}</p>
-{% endif %}
 {% load static %}
 <script src="{% static 'js/dynamic-formset.js' %}"></script>
 <script>
@@ -23,9 +20,10 @@
 </script>
 <form method="post">
     {% csrf_token %}
-    {{ jf.as_p }}
+    <h3>Upsetting event: </h3>
+    {{ jf.upsetting_event }}
     <h3>Emotions</h3>
-    <table id="emotion_forms_table">
+    <table id="emotion_forms_table" class="table table-dark">
         <thead>
             <tr>
                 <th scope="col">Emotion</th>
@@ -43,19 +41,23 @@
                     <td>{{ form.now_percent }}</td>
                     <td>{{ form.goal_percent }}</td>
                     <td>{{ form.after_percent }}</td>
+                    {% if page_title != "Read" %}
                     <td{% if forloop.first %} class="hidden" {% endif %}>
-                        <a id="remove-{{ form.prefix }}-row" href="#" class="emotion-delete-row">Delete</a>
+                        <a id="remove-{{ form.prefix }}-row" class="emotion-delete-row">Delete</a>
                     </td>
+                    {% endif %}
             </tr>
             {% endfor %}
+            {% if page_title != "Read" %}
             <tr>
-                <td colspan="4"><a href="#" class="emotion-add-row">Add</a></td>
+                <td colspan="4"><a class="emotion-add-row">Add</a></td>
             </tr>
+            {% endif %}
         </tbody>
     </table>
     {{ efs.management_form }}
     <h3>Thoughts</h3>
-    <table id="thought_forms_table">
+    <table id="thought_forms_table" class="table table-dark">
         <thead>
             <tr>
                 <th scope="col">Negative Thoughts</th>
@@ -75,17 +77,23 @@
                     <td>{{ form.distortions }}</td>
                     <td>{{ form.positive_thoughts }}</td>
                     <td>{{ form.belief_percent }}</td>
+                    {% if page_title != "Read" %}
                     <td{% if forloop.first %} class="hidden" {% endif %}>
-                        <a id="remove-{{ form.prefix }}-row" href="#" class="thought-delete-row">Delete</a>
+                        <a id="remove-{{ form.prefix }}-row" class="thought-delete-row">Delete</a>
                     </td>
+                    {% endif %}
             </tr>
             {% endfor %}
+            {% if page_title != "Read" %}
             <tr>
-                <td colspan="4"><a href="#" class="thought-add-row">Add</a></td>
+                <td colspan="4"><a class="thought-add-row">Add</a></td>
             </tr>
+            {% endif %}
         </tbody>
     </table>
     {{ tfs.management_form }}
-    <input type="submit" value="Submit">
+    {% if page_title != "Read" %}
+    <input class="btn btn-primary" type="submit" value="Submit">
+    {% endif %}
 </form>
 {% endblock %}
