@@ -1,17 +1,91 @@
 {% extends "base.html" %}
 {% block content %}
 {% if journal_id %}
-    <p>{{ journal_id }}</p>
+<p>{{ journal_id }}</p>
 {% endif %}
+{% load static %}
+<script src="{% static 'js/dynamic-formset.js' %}"></script>
+<script>
+    $(function () {
+        $('.emotion-add-row').click(function () {
+            return addForm(this, '{{ efs.prefix }}');
+        });
+        $('.emotion-delete-row').click(function () {
+            return deleteForm(this, '{{ efs.prefix }}');
+        });
+        $('.thought-add-row').click(function () {
+            return addForm(this, '{{ tfs.prefix }}');
+        });
+        $('.thought-delete-row').click(function () {
+            return deleteForm(this, '{{ tfs.prefix }}');
+        });
+    })
+</script>
 <form method="post">
     {% csrf_token %}
     {{ jf.as_p }}
     <h3>Emotions</h3>
-    {{ efs.as_table }}
-    <input type="button" value="Add More" id="add_more">
-    <fieldset><legend>Thoughts</legend>
-        {{ tfs }}
-    </fieldset>
+    <table id="emotion_forms_table">
+        <thead>
+            <tr>
+                <th scope="col">Emotion</th>
+                <th scope="col">Other Text</th>
+                <th scope="col">Now %</th>
+                <th scope="col">Goal %</th>
+                <th scope="col">After %</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in efs.forms %}
+            <tr id="{{ form.prefix }}-row" class="{{ efs.prefix }}-dynamic-form">
+                    <td>{{ form.emotion }}</td>
+                    <td>{{ form.other_text }}</td>
+                    <td>{{ form.now_percent }}</td>
+                    <td>{{ form.goal_percent }}</td>
+                    <td>{{ form.after_percent }}</td>
+                    <td{% if forloop.first %} class="hidden" {% endif %}>
+                        <a id="remove-{{ form.prefix }}-row" href="#" class="emotion-delete-row">Delete</a>
+                    </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4"><a href="#" class="emotion-add-row">Add</a></td>
+            </tr>
+        </tbody>
+    </table>
+    {{ efs.management_form }}
+    <h3>Thoughts</h3>
+    <table id="thought_forms_table">
+        <thead>
+            <tr>
+                <th scope="col">Negative Thoughts</th>
+                <th scope="col">Now %</th>
+                <th scope="col">After %</th>
+                <th scope="col">Distortions</th>
+                <th scope="col">Positive Thoughts</th>
+                <th scope="col">Belief %</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in tfs.forms %}
+            <tr id="{{ form.prefix }}-row" class="{{ tfs.prefix }}-dynamic-form">
+                    <td>{{ form.negative_thoughts }}</td>
+                    <td>{{ form.now_percent }}</td>
+                    <td>{{ form.after_percent }}</td>
+                    <td>{{ form.distortions }}</td>
+                    <td>{{ form.positive_thoughts }}</td>
+                    <td>{{ form.belief_percent }}</td>
+                    <td{% if forloop.first %} class="hidden" {% endif %}>
+                        <a id="remove-{{ form.prefix }}-row" href="#" class="thought-delete-row">Delete</a>
+                    </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4"><a href="#" class="thought-add-row">Add</a></td>
+            </tr>
+        </tbody>
+    </table>
+    {{ tfs.management_form }}
     <input type="submit" value="Submit">
 </form>
 {% endblock %}
