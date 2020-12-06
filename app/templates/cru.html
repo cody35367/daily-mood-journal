@@ -17,6 +17,20 @@
             return deleteForm(this, '{{ tfs.prefix }}');
         });
     })
+    function setOtherTextState() {
+        $('#emotion_forms_table > tbody > tr').each(function (index, tr) {
+            var select_emotion = $(tr).find('select[id$=-emotion]')
+            if (select_emotion.val() != "other") {
+                $(tr).find('input[id$=-other_text').prop("disabled", true);
+            } else {
+                $(tr).find('input[id$=-other_text').prop("disabled", false);
+            }
+            select_emotion.change(setOtherTextState);
+        });
+    }
+    $('document').ready(function () {
+        setOtherTextState();
+    });
 </script>
 <form method="post">
     {% csrf_token %}
@@ -31,26 +45,27 @@
                 <th scope="col">Now %</th>
                 <th scope="col">Goal %</th>
                 <th scope="col">After %</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for form in efs.forms %}
             <tr id="{{ form.prefix }}-row" class="{{ efs.prefix }}-dynamic-form">
-                    <td>{{ form.emotion }}</td>
-                    <td>{{ form.other_text }}</td>
-                    <td>{{ form.now_percent }}</td>
-                    <td>{{ form.goal_percent }}</td>
-                    <td>{{ form.after_percent }}</td>
-                    {% if page_title != "Read" %}
-                    <td{% if forloop.first %} class="hidden" {% endif %}>
-                        <a id="remove-{{ form.prefix }}-row" class="emotion-delete-row">Delete</a>
+                <td>{{ form.emotion }}</td>
+                <td>{{ form.other_text }}</td>
+                <td>{{ form.now_percent }}</td>
+                <td>{{ form.goal_percent }}</td>
+                <td>{{ form.after_percent }}</td>
+                {% if page_title != "Read" %}
+                <td{% if forloop.first %} class="hidden" {% endif %}>
+                    <a id="remove-{{ form.prefix }}-row" class="emotion-delete-row">Delete</a>
                     </td>
                     {% endif %}
             </tr>
             {% endfor %}
             {% if page_title != "Read" %}
             <tr>
-                <td colspan="4"><a class="emotion-add-row">Add</a></td>
+                <td colspan="6"><a class="emotion-add-row">Add</a></td>
             </tr>
             {% endif %}
         </tbody>
@@ -66,27 +81,28 @@
                 <th scope="col">Distortions</th>
                 <th scope="col">Positive Thoughts</th>
                 <th scope="col">Belief %</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             {% for form in tfs.forms %}
             <tr id="{{ form.prefix }}-row" class="{{ tfs.prefix }}-dynamic-form">
-                    <td>{{ form.negative_thoughts }}</td>
-                    <td>{{ form.now_percent }}</td>
-                    <td>{{ form.after_percent }}</td>
-                    <td>{{ form.distortions }}</td>
-                    <td>{{ form.positive_thoughts }}</td>
-                    <td>{{ form.belief_percent }}</td>
-                    {% if page_title != "Read" %}
-                    <td{% if forloop.first %} class="hidden" {% endif %}>
-                        <a id="remove-{{ form.prefix }}-row" class="thought-delete-row">Delete</a>
+                <td>{{ form.negative_thoughts }}</td>
+                <td>{{ form.now_percent }}</td>
+                <td>{{ form.after_percent }}</td>
+                <td>{{ form.distortions }}</td>
+                <td>{{ form.positive_thoughts }}</td>
+                <td>{{ form.belief_percent }}</td>
+                {% if page_title != "Read" %}
+                <td{% if forloop.first %} class="hidden" {% endif %}>
+                    <a id="remove-{{ form.prefix }}-row" class="thought-delete-row">Delete</a>
                     </td>
                     {% endif %}
             </tr>
             {% endfor %}
             {% if page_title != "Read" %}
             <tr>
-                <td colspan="4"><a class="thought-add-row">Add</a></td>
+                <td colspan="7"><a class="thought-add-row">Add</a></td>
             </tr>
             {% endif %}
         </tbody>
@@ -94,6 +110,8 @@
     {{ tfs.management_form }}
     {% if page_title != "Read" %}
     <input class="btn btn-primary" type="submit" value="Submit">
+    {% else %}
+    <a class="btn btn-primary" href="/{{ journal_id }}/edit" role="button">Edit</a>
     {% endif %}
 </form>
 {% endblock %}
