@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
+<script src="{% static 'js/common.js' %}"></script>
 {% if page_title == "Read" %}
 <script src="{% static 'js/read.js' %}"></script>
+<script>
+    $(function () {
+        makeCheckList()
+        addDistortionTooltips(JSON.parse('{{ distortions_dict_str|safe }}'));
+    });
+</script>
 {% else %}
 <script src="{% static 'js/not-read.js' %}"></script>
 <script>
@@ -20,6 +27,7 @@
             return deleteForm(this, '{{ tfs.prefix }}');
         });
         setOtherTextState();
+        addDistortionTooltips(JSON.parse('{{ distortions_dict_str|safe }}'));
     });
 </script>
 {% endif %}

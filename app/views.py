@@ -1,10 +1,11 @@
 from os import path as os_path
+import json
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
-from .models import Journal
+from .models import Journal, Distortion
 from .forms import JournalForm,EmotionFormSet,ThoughtFormSet
 
 @login_required
@@ -45,11 +46,15 @@ def cru(request,journal_id=None):
             for form in tfs:
                 for field in form:
                     field.field.disabled=True
+        distortions_dict={}
+        for distortion in Distortion.objects.all():
+            distortions_dict[distortion.name]=distortion.description.replace("'","\\u0027")
         context = {
             'page_title': url_path,
             'journal_id': journal_id,
             'jf': jf,
             'efs': efs,
-            'tfs': tfs
+            'tfs': tfs,
+            'distortions_dict_str': json.dumps(distortions_dict)
             }
         return render(request, 'cru.html', context)
