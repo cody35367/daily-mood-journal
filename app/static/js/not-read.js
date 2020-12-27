@@ -34,3 +34,15 @@ function deleteForm(btn, prefix) {
     }
     return false;
 }
+
+function setOtherTextState() {
+    $('#emotion_forms_table > tbody > tr').each(function (index, tr) {
+        var select_emotion = $(tr).find('select[id$=-emotion]')
+        if (select_emotion.val() != "other") {
+            $(tr).find('input[id$=-other_text').prop("disabled", true);
+        } else {
+            $(tr).find('input[id$=-other_text').prop("disabled", false);
+        }
+        select_emotion.change(setOtherTextState);
+    });
+}
