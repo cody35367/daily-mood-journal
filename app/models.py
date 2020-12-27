@@ -2,7 +2,8 @@ from django.db import models
 
 class Journal(models.Model):
     upsetting_event = models.CharField(max_length=200)
-    create_date = models.DateTimeField('date created')
+    create_date = models.DateTimeField('date created',auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
 
 class Emotion(models.Model):
     journal = models.ForeignKey(Journal, on_delete=models.CASCADE)

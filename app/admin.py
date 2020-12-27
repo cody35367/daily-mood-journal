@@ -21,7 +21,7 @@ class DistortionAdmin(admin.ModelAdmin):
     
 class JournalAdmin(admin.ModelAdmin):
     inlines = [EmotionInline,ThoughtInline]
-    list_display = ['upsetting_event','create_date']
+    list_display = ['upsetting_event','create_date','update_date']
 
 admin.site.register(Journal,JournalAdmin)
 admin.site.register(Distortion,DistortionAdmin)

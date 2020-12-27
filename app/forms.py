@@ -7,7 +7,7 @@ from .models import Journal,Emotion,Thought,Distortion
 class JournalForm(ModelForm):
     class Meta:
         model = Journal
-        fields = ['upsetting_event','create_date']
+        fields = ['upsetting_event']
 
 EmotionFormSet = inlineformset_factory(
                     Journal,

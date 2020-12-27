@@ -50,6 +50,7 @@
         <tbody>
             {% for form in efs.forms %}
             <tr id="{{ form.prefix }}-row" class="{{ efs.prefix }}-dynamic-form">
+                {{ form.id }}
                 <td>{{ form.emotion }}</td>
                 <td>{{ form.other_text }}</td>
                 <td>{{ form.now_percent }}</td>
@@ -86,6 +87,7 @@
         <tbody>
             {% for form in tfs.forms %}
             <tr id="{{ form.prefix }}-row" class="{{ tfs.prefix }}-dynamic-form">
+                {{ form.id }}
                 <td>{{ form.negative_thoughts }}</td>
                 <td>{{ form.now_percent }}</td>
                 <td>{{ form.after_percent }}</td>

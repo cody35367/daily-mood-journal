@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
+{% if error %}
+<div class="alert alert-danger" role="alert">
+    There was an error submitting the previous form! Please see logs for details.
+</div>
+{% endif %}
 {% if journal_list %}
 <table id="index_table" class="table table-dark">
     <thead>
         <tr>
             <th scope="col">Upsetting Event</th>
             <th scope="col">Date Created</th>
+            <th scope="col">Date Updated</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -14,6 +20,7 @@
         <tr>
             <td><a href="/{{ journal.id }}/read">{{ journal.upsetting_event }}</a></td>
             <td>{{ journal.create_date }}</td>
+            <td>{{ journal.update_date }}</td>
             <td><a href="/{{ journal.id }}/edit">Edit</a></td>
         </tr>
         {% endfor %}

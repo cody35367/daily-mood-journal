@@ -11,7 +11,8 @@ from .forms import JournalForm,EmotionFormSet,ThoughtFormSet
 @login_required
 def index(request):
     journal_list = Journal.objects.order_by('-create_date')
-    context = {'page_title': "Home", 'journal_list': journal_list}
+    error=int(request.GET.get('error',0))
+    context = {'page_title': "Home", 'journal_list': journal_list, "error": error}
     return render(request, 'index.html', context)
 
 @login_required
@@ -21,7 +22,7 @@ def cru(request,journal_id=None):
     else:
         j = Journal()
     if request.method == "POST":
-        jf = JournalForm(request.POST, request.FILES,instance=j)
+        jf = JournalForm(request.POST, request.FILES, instance=j)
         efs = EmotionFormSet(request.POST, request.FILES, instance=j)
         tfs = ThoughtFormSet(request.POST, request.FILES, instance=j)
         if jf.is_valid() and efs.is_valid() and tfs.is_valid():
@@ -30,8 +31,10 @@ def cru(request,journal_id=None):
             tfs.save()
             return HttpResponseRedirect("/")
         else:
-            #TODO
-            pass
+            print("Journal form errors: "+jf.errors)
+            print("Emotion formset errors: "+efs.errors)
+            print("Thought formset errors: "+tfs.errors)
+            return HttpResponseRedirect("/?error=1")
     else:
         jf = JournalForm(instance=j)
         efs = EmotionFormSet(instance=j)
