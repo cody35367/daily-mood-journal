@@ -8,13 +8,19 @@ function updateElementIndex(el, prefix, ndx) {
     if ($(el).prop("name")) $(el).prop("name", $(el).prop("name").replace(id_regex, replacement));
 }
 
+var row_count = 0;
+function setRowCount(startValue){
+    row_count = startValue;
+}
+
 function addForm(btn, prefix) {
     var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
     var row = $('.' + prefix + '-dynamic-form:first').clone(true).get(0);
     $(row).removeAttr('id').insertAfter($('.' + prefix + '-dynamic-form:last')).children('.hidden').removeClass('hidden');
     var form_id_hidden = $(row).find('input[type=hidden]');
     updateElementIndex(form_id_hidden, prefix, formCount);
-    $(form_id_hidden).prop("value", formCount+1);
+    row_count+=1;
+    $(form_id_hidden).prop("value", row_count);
     $(row).children().not(':last').children().each(function () {
         updateElementIndex(this, prefix, formCount);
         $(this).val('');
@@ -42,6 +48,7 @@ function deleteForm(btn, prefix) {
     for (var i = 0, formCount = forms.length; i < formCount; i++) {
         var form_id_hidden = $(forms.get(i)).find('input[type=hidden]');
         updateElementIndex(form_id_hidden, prefix, i);
+        row_count-=1;
         $(form_id_hidden).prop("value", i+1);
         $(forms.get(i)).children().not(':last').children().each(function () {
             updateElementIndex(this, prefix, i);
