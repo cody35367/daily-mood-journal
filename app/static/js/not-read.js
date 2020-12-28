@@ -12,7 +12,9 @@ function addForm(btn, prefix) {
     var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
     var row = $('.' + prefix + '-dynamic-form:first').clone(true).get(0);
     $(row).removeAttr('id').insertAfter($('.' + prefix + '-dynamic-form:last')).children('.hidden').removeClass('hidden');
-    updateElementIndex($(row).find('input[type=hidden]'), prefix, formCount);
+    var form_id_hidden = $(row).find('input[type=hidden]');
+    updateElementIndex(form_id_hidden, prefix, formCount);
+    $(form_id_hidden).removeAttr("value");
     $(row).children().not(':last').children().each(function () {
         updateElementIndex(this, prefix, formCount);
         $(this).val('');
