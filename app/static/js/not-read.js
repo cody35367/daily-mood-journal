@@ -15,6 +15,15 @@ function addForm(btn, prefix) {
     $(row).children().not(':last').children().each(function () {
         updateElementIndex(this, prefix, formCount);
         $(this).val('');
+        if ($(this).is('ul[id$=-distortions]')){
+            $(this).each(function(){
+                var dist_label=$(this).find('label');
+                updateElementIndex(dist_label, prefix, formCount);
+                var dist_checkbox=$(this).find('input[type=checkbox]');
+                updateElementIndex(dist_checkbox, prefix, formCount);
+                $(dist_checkbox).prop("checked", false);
+            });
+        }
     });
     $(row).find('.delete-row').click(function () {
         deleteForm(this, prefix);

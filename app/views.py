@@ -31,9 +31,9 @@ def cru(request,journal_id=None):
             tfs.save()
             return HttpResponseRedirect("/")
         else:
-            print("Journal form errors: "+jf.errors)
-            print("Emotion formset errors: "+efs.errors)
-            print("Thought formset errors: "+tfs.errors)
+            print("Journal form errors: "+str(jf.errors))
+            print("Emotion formset errors: "+str(efs.errors))
+            print("Thought formset errors: "+str(tfs.errors))
             return HttpResponseRedirect("/?error=1")
     else:
         jf = JournalForm(instance=j)
