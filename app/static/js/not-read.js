@@ -3,20 +3,23 @@
 function updateElementIndex(el, prefix, ndx) {
     var id_regex = new RegExp('(' + prefix + '-\\d+)');
     var replacement = prefix + '-' + ndx;
-    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
-    if (el.id) el.id = el.id.replace(id_regex, replacement);
-    if (el.name) el.name = el.name.replace(id_regex, replacement);
+    if ($(el).prop("for")) $(el).prop("for", $(el).prop("for").replace(id_regex, replacement));
+    if ($(el).prop("id")) $(el).prop("id", $(el).prop("id").replace(id_regex, replacement));
+    if ($(el).prop("name")) $(el).prop("name", $(el).prop("name").replace(id_regex, replacement));
 }
 
 function addForm(btn, prefix) {
     var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
     var row = $('.' + prefix + '-dynamic-form:first').clone(true).get(0);
     $(row).removeAttr('id').insertAfter($('.' + prefix + '-dynamic-form:last')).children('.hidden').removeClass('hidden');
+    var form_id_hidden = $(row).find('input[type=hidden]');
+    updateElementIndex(form_id_hidden, prefix, formCount);
+    $(form_id_hidden).prop("value", formCount+1);
     $(row).children().not(':last').children().each(function () {
         updateElementIndex(this, prefix, formCount);
         $(this).val('');
         if ($(this).is('ul[id$=-distortions]')){
-            $(this).each(function(){
+            $(this).find('li').each(function(){
                 var dist_label=$(this).find('label');
                 updateElementIndex(dist_label, prefix, formCount);
                 var dist_checkbox=$(this).find('input[type=checkbox]');
@@ -37,8 +40,19 @@ function deleteForm(btn, prefix) {
     var forms = $('.' + prefix + '-dynamic-form');
     $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
     for (var i = 0, formCount = forms.length; i < formCount; i++) {
+        var form_id_hidden = $(forms.get(i)).find('input[type=hidden]');
+        updateElementIndex(form_id_hidden, prefix, i);
+        $(form_id_hidden).prop("value", i+1);
         $(forms.get(i)).children().not(':last').children().each(function () {
             updateElementIndex(this, prefix, i);
+            if ($(this).is('ul[id$=-distortions]')){
+                $(this).find('li').each(function(){
+                    var dist_label=$(this).find('label');
+                    updateElementIndex(dist_label, prefix, i);
+                    var dist_checkbox=$(this).find('input[type=checkbox]');
+                    updateElementIndex(dist_checkbox, prefix, i);
+                });
+            }
         });
     }
     return false;
