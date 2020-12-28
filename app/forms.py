@@ -12,7 +12,7 @@ class JournalForm(ModelForm):
 EmotionFormSet = inlineformset_factory(
                     Journal,
                     Emotion,
-                    extra=0,
+                    extra=1,
                     fields=[
                         'emotion',
                         'other_text',
@@ -23,7 +23,7 @@ EmotionFormSet = inlineformset_factory(
 ThoughtFormSet = inlineformset_factory(
                     Journal,
                     Thought,
-                    extra=0,
+                    extra=1,
                     widgets={
                         'distortions' : CheckboxSelectMultiple(),
                         'negative_thoughts' : Textarea(),
