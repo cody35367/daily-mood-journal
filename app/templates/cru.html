@@ -29,7 +29,6 @@
         $('.thought-delete-row').click(function () {
             return deleteForm(this, '{{ tfs.prefix }}');
         });
-        setRowCount(1);
 {% endif %}
         setOtherTextState();
         addDistortionTooltips(JSON.parse('{{ distortions_dict_str|safe }}'));
