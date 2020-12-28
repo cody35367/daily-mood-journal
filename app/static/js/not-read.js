@@ -14,7 +14,7 @@ function addForm(btn, prefix) {
     $(row).removeAttr('id').insertAfter($('.' + prefix + '-dynamic-form:last')).children('.hidden').removeClass('hidden');
     var form_id_hidden = $(row).find('input[type=hidden]');
     updateElementIndex(form_id_hidden, prefix, formCount);
-    $(form_id_hidden).prop("value", 1);
+    $(form_id_hidden).prop("value", formCount+1);
     $(row).children().not(':last').children().each(function () {
         updateElementIndex(this, prefix, formCount);
         $(this).val('');
@@ -40,7 +40,9 @@ function deleteForm(btn, prefix) {
     var forms = $('.' + prefix + '-dynamic-form');
     $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
     for (var i = 0, formCount = forms.length; i < formCount; i++) {
-        updateElementIndex($(forms.get(i)).find('input[type=hidden]'), prefix, i);
+        var form_id_hidden = $(forms.get(i)).find('input[type=hidden]');
+        updateElementIndex(form_id_hidden, prefix, i);
+        $(form_id_hidden).prop("value", i+1);
         $(forms.get(i)).children().not(':last').children().each(function () {
             updateElementIndex(this, prefix, i);
             if ($(this).is('ul[id$=-distortions]')){
