@@ -17,15 +17,19 @@
         $('.emotion-add-row').click(function () {
             return addForm(this, '{{ efs.prefix }}');
         });
+{% if page_title == "Create" %}
         $('.emotion-delete-row').click(function () {
             return deleteForm(this, '{{ efs.prefix }}');
         });
+{% endif %}
         $('.thought-add-row').click(function () {
             return addForm(this, '{{ tfs.prefix }}');
         });
+{% if page_title == "Create" %}
         $('.thought-delete-row').click(function () {
             return deleteForm(this, '{{ tfs.prefix }}');
         });
+{% endif %}
         setOtherTextState();
         addDistortionTooltips(JSON.parse('{{ distortions_dict_str|safe }}'));
     });
@@ -44,7 +48,11 @@
                 <th scope="col">Now %</th>
                 <th scope="col">Goal %</th>
                 <th scope="col">After %</th>
+                {% if page_title == "Edit" %}
+                <th scope="col">Delete?</th>
+                {% else %}
                 <th scope="col"></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -56,10 +64,12 @@
                 <td>{{ form.now_percent }}</td>
                 <td>{{ form.goal_percent }}</td>
                 <td>{{ form.after_percent }}</td>
-                {% if page_title != "Read" %}
+                {% if page_title == "Create" %}
                 <td{% if forloop.first %} class="hidden" {% endif %}>
                     <a id="remove-{{ form.prefix }}-row" class="emotion-delete-row">Delete</a>
                 </td>
+                {% elif page_title == "Edit" %}
+                <td>{{ form.DELETE }}</td>
                 {% endif %}
             </tr>
             {% endfor %}
@@ -81,7 +91,11 @@
                 <th scope="col">Distortions</th>
                 <th scope="col">Positive Thoughts</th>
                 <th scope="col">Belief %</th>
+                {% if page_title == "Edit" %}
+                <th scope="col">Delete?</th>
+                {% else %}
                 <th scope="col"></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -94,10 +108,12 @@
                 <td>{{ form.distortions }}</td>
                 <td>{{ form.positive_thoughts }}</td>
                 <td>{{ form.belief_percent }}</td>
-                {% if page_title != "Read" %}
+                {% if page_title == "Create" %}
                 <td{% if forloop.first %} class="hidden" {% endif %}>
                     <a id="remove-{{ form.prefix }}-row" class="thought-delete-row">Delete</a>
                 </td>
+                {% elif page_title == "Edit" %}
+                <td>{{ form.DELETE }}</td>
                 {% endif %}
             </tr>
             {% endfor %}

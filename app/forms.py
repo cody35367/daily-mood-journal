@@ -9,10 +9,11 @@ class JournalForm(ModelForm):
         model = Journal
         fields = ['upsetting_event']
 
-EmotionFormSet = inlineformset_factory(
+def getEmotionFormSet(extras):
+    return inlineformset_factory(
                     Journal,
                     Emotion,
-                    extra=1,
+                    extra=extras,
                     fields=[
                         'emotion',
                         'other_text',
@@ -20,10 +21,12 @@ EmotionFormSet = inlineformset_factory(
                         'goal_percent',
                         'after_percent'
                     ])
-ThoughtFormSet = inlineformset_factory(
+
+def getThoughtFormSet(extras):
+    return inlineformset_factory(
                     Journal,
                     Thought,
-                    extra=1,
+                    extra=extras,
                     widgets={
                         'distortions' : CheckboxSelectMultiple(),
                         'negative_thoughts' : Textarea(),

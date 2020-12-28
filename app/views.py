@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
 from .models import Journal, Distortion
-from .forms import JournalForm,EmotionFormSet,ThoughtFormSet
+from .forms import JournalForm,getEmotionFormSet,getThoughtFormSet
 
 @login_required
 def index(request):
@@ -23,6 +23,8 @@ def cru(request,journal_id=None):
         j = Journal()
     if request.method == "POST":
         jf = JournalForm(request.POST, request.FILES, instance=j)
+        EmotionFormSet=getEmotionFormSet(0)
+        ThoughtFormSet=getThoughtFormSet(0)
         efs = EmotionFormSet(request.POST, request.FILES, instance=j)
         tfs = ThoughtFormSet(request.POST, request.FILES, instance=j)
         if jf.is_valid() and efs.is_valid() and tfs.is_valid():
@@ -36,10 +38,16 @@ def cru(request,journal_id=None):
             print("Thought formset errors: "+str(tfs.errors))
             return HttpResponseRedirect("/?error=1")
     else:
+        url_path = os_path.basename(request.path.strip("/")).capitalize()
         jf = JournalForm(instance=j)
+        if url_path == "Create":
+            EmotionFormSet=getEmotionFormSet(1)
+            ThoughtFormSet=getThoughtFormSet(1)
+        else:
+            EmotionFormSet=getEmotionFormSet(0)
+            ThoughtFormSet=getThoughtFormSet(0)
         efs = EmotionFormSet(instance=j)
         tfs = ThoughtFormSet(instance=j)
-        url_path = os_path.basename(request.path.strip("/")).capitalize()
         if url_path == "Read":
             for field in jf:
                 field.field.disabled=True
